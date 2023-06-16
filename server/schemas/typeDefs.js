@@ -6,16 +6,17 @@ type User{
    username: String
    email: String
    password: String
-   books: [Book]
+   bookCount: Int
+   savedBooks: [Book]
 }
 
 type Book{
-authors: [String]
-description: String
-bookId: String
-image: String
-link: String
-title: String
+  bookId: String
+  authors: [String]
+  description: String
+  title: String
+  image: String
+  link: String
 }
 
 type Auth {
@@ -28,9 +29,10 @@ type Query{
 }
 
 type Mutation{
+    login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    loginUser(email: String!, password: String!): Auth
-    saveBook(description: String!, bookId: String!, title: String!, link: String, image: String, authors: [String]): Book
-    
+    saveBook(authors: [String], description: String!, title: String!, bookId: String!, image: String, link: String): User
+    removeBook(bookId: String!): User
     }
 `
+module.exports = typeDefs;
