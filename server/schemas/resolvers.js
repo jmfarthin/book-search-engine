@@ -13,6 +13,7 @@ const resolvers = {
     },
     Mutation: {
         login: async (parent, { email, password }) => {
+            console.log(email);
             const user = await User.findOne({ email });
 
             if (!user) {
@@ -35,25 +36,27 @@ const resolvers = {
             return { token, user };
         },
         saveBook: async (parent, { authors, description, title, bookId, image, link }, context) => {
+            console.log('SAVING BOOK')
+            console.log(authors)
             if (context.user) {
-                await User.findOneAndUpdate(
+                const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { savedBooks: { authors, description, title, bookId, image, link } } },
                     { new: true, runValidators: true, }
                 );
 
-                return User;
+                return updatedUser;
             }
             throw new AuthenticationError('You need to be logged in!');
         },
         removeBook: async (parent, { bookId }, context) => {
             if (context.user) {
-                await User.findOneAndUpdate(
+                const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $pull: { savedBooks: { bookId: bookId } } },
                     { new: true }
                 );
-                return User;
+                return updatedUser;
             }
             throw new AuthenticationError('You need to be logged in!');
         },
