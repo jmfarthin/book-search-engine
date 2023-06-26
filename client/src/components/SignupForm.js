@@ -32,6 +32,7 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
+    // added addUser mutation
     try {
       const { data } = await addUser({ variables: { ...userFormData } });
 

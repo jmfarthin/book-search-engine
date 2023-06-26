@@ -13,8 +13,10 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
+  // added GET_ME query for user and saved book data
   const { loading, error, data, refetch } = useQuery(GET_ME);
   const userData = data?.me
+
   const [removeBook, { error: removeBookError }] = useMutation(REMOVE_BOOK);
   if (loading) { return <div>Loading...</div> }
   if (error) {
@@ -31,14 +33,17 @@ const SavedBooks = () => {
       return false;
     }
 
+    // added removeBook mutation 
     try {
       await removeBook({ variables: { bookId } });
-      removeBookId(bookId);
-      // const updatedUser = { ...userData, savedBooks: userData.savedBooks.filter((book) => book.bookId !== bookId) };
-      // setUserData(updatedUser);
-      refetch()
 
       // upon success, remove book's id from localStorage
+      removeBookId(bookId);
+
+      // get updated saved books and rerender page
+      refetch()
+
+
     } catch (err) {
       console.error(err);
     }

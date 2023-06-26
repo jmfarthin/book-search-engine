@@ -76,11 +76,12 @@ const SearchBooks = () => {
       return false;
     }
 
+    // added saveBook mutation
     try {
       console.log("About to save")
       await saveBook({
         variables: {
-          ...bookToSave 
+          ...bookToSave
         }
       })
 

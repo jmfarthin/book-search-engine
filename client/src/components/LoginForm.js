@@ -28,6 +28,7 @@ const LoginForm = () => {
       event.stopPropagation();
     }
 
+    //added login mutation
     try {
       const { data } = await login({
         variables: { ...userFormData },
