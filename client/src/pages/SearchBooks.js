@@ -80,7 +80,7 @@ const SearchBooks = () => {
       console.log("About to save")
       await saveBook({
         variables: {
-          bookData: { ...bookToSave }
+          ...bookToSave 
         }
       })
 
